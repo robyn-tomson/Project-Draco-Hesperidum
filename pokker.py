@@ -1,0 +1,1 @@
+from pokkerikäsi import pokerhand
