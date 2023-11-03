@@ -28,11 +28,13 @@ vaenlasekaartid=[]
 active=False
 run= True
 user_text=""
-panus=0
+panus=5
 sinuraha=100
+vaenlaseraha=100
 buttonOne = Button(150, 150, 200, 200, red, 0, 7, "RAISE", white, screen, pygame.font.Font('freesansbold.ttf', 40))
 Tekst = Tekstivali(30, 300, 70, 70, (0,0,250), 0, 7, str(round), white, screen, pygame.font.Font('freesansbold.ttf', 40))
 sinurahab=Tekstivali(600, 0, 70, 70, (0,0,250), 0, 7, str(sinuraha), white, screen, pygame.font.Font('freesansbold.ttf', 40))
+vaenlaserahab=Tekstivali(500, 0, 70, 70, red, 0, 7, str(sinuraha), white, screen, pygame.font.Font('freesansbold.ttf', 40))
 #mida kood teeb töö ajal
 while run:
     #teeb valmis kaartid kuvamiseks
@@ -69,8 +71,10 @@ while run:
     #muudab teksti
     Tekst.text=str(panus)
     sinurahab.drawRect()
+    vaenlaserahab.drawRect()
     #muudab teksti
     sinurahab.text=str(sinuraha)
+    vaenlaserahab.text=str(vaenlaseraha)
     #paneb nuppu ekraanile
     button=buttonOne.drawRect()
     for event in pygame.event.get():
