@@ -14,8 +14,6 @@ screen=pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 red = (255,67,89)
 white = (255,255,255)
 #teeb nuppu, ei ole veel ekraanile kuvatud
-buttonOne = Button(150, 150, 200, 200, red, 0, 7, "X", white, screen, pygame.font.Font('freesansbold.ttf', 40))
-Tekst = Tekstivali(30, 300, 70, 70, (0,0,250), 0, 7, str(round), white, screen, pygame.font.Font('freesansbold.ttf', 40))
 #vajalikud muutujad
 round=1
 ettevalmistus=1
@@ -23,8 +21,14 @@ algus=0
 imp=[]
 imp2=[]
 kaartid=[]
+active=False
 run= True
-user_text
+user_text=""
+panus=0
+sinuraha=100
+buttonOne = Button(150, 150, 200, 200, red, 0, 7, "RAISE", white, screen, pygame.font.Font('freesansbold.ttf', 40))
+Tekst = Tekstivali(30, 300, 70, 70, (0,0,250), 0, 7, str(round), white, screen, pygame.font.Font('freesansbold.ttf', 40))
+sinurahab=Tekstivali(600, 0, 70, 70, (0,0,250), 0, 7, str(sinuraha), white, screen, pygame.font.Font('freesansbold.ttf', 40))
 #mida kood teeb töö ajal
 while run:
     #teeb valmis kaartid kuvamiseks
@@ -46,7 +50,10 @@ while run:
     #paneb teksti ekraanile
     Tekst.drawRect()
     #muudab teksti
-    Tekst.text=str(round)
+    Tekst.text=str(panus)
+    sinurahab.drawRect()
+    #muudab teksti
+    sinurahab.text=str(sinuraha)
     #paneb nuppu ekraanile
     button=buttonOne.drawRect()
     for event in pygame.event.get():
@@ -54,22 +61,25 @@ while run:
             run=False
         #tuvastab nuppule vajutusi
         if Button.tee(event, button):
-            if input_rect.collidepoint(event.pos): 
                 active = True
-            else: 
-                active = False
-  
-        if event.type == pygame.KEYDOWN: 
-  
-            # Check for backspace 
-            if event.key == pygame.K_BACKSPACE: 
-  
-                # get text input from 0 to -1 i.e. end. 
-                user_text = user_text[:-1] 
-                print(user_text)
-  
-            # Unicode standard is used for string 
-            # formation 
+        if active:
+            buttonOne.text=user_text
+        if event.type == pygame.KEYDOWN and active: 
+            if event.key == pygame.K_RETURN:
+                buttonOne.text="RAISE"
+                try:
+                    if int(user_text)>sinuraha:
+                        buttonOne.text="vale"
+                    else:
+                        panus+=int(user_text)
+                        sinuraha-=int(user_text)
+                except:
+                    user_text=""
+                    buttonOne.text="vale"
+                user_text=""
+                active=False
+            elif event.key == pygame.K_BACKSPACE:
+                user_text= user_text[:-1]
             else: 
                 user_text += event.unicode
     #uuendab ekraani
