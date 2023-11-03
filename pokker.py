@@ -15,12 +15,16 @@ red = (255,67,89)
 white = (255,255,255)
 #teeb nuppu, ei ole veel ekraanile kuvatud
 #vajalikud muutujad
-round=1
+round=0
 ettevalmistus=1
 algus=0
 imp=[]
 imp2=[]
+impsina=[]
+impsina2=[]
 kaartid=[]
+sinukaartid=[]
+vaenlasekaartid=[]
 active=False
 run= True
 user_text=""
@@ -40,13 +44,26 @@ while run:
             imp.append(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(kaartid[l])).convert())
             imp2.append(pygame.transform.scale(imp[l], (125, 181)))
         ettevalmistus=0
+    if ettevalmistus==1 and round==0:
+        for i in range(2): 
+            sinukaartid.append(kaardipakk.kaardigen(sinukaartid))
+            vaenlasekaartid.append(kaardipakk.kaardigen(vaenlasekaartid))
+            print(kaartid)
+        for l in range(2):
+            impsina.append(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(sinukaartid[l])).convert())
+            impsina2.append(pygame.transform.scale(impsina[l], (125, 181)))
+        ettevalmistus=0
     #täidab ekraani mustaga
     screen.fill((0,0,0))
     #paneb kaartid ekraanile
-    algus=0
     for el in imp2:
         screen.blit(el, (algus, 0))
         algus+=125
+    algus=0
+    for al in impsina2:
+        screen.blit(al, (algus, 400))
+        algus+=125
+    algus=0
     #paneb teksti ekraanile
     Tekst.drawRect()
     #muudab teksti
@@ -73,6 +90,8 @@ while run:
                     else:
                         panus+=int(user_text)
                         sinuraha-=int(user_text)
+                        round=1
+                        ettevalmistus=1
                 except:
                     user_text=""
                     buttonOne.text="vale"
