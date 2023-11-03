@@ -13,7 +13,7 @@ def kaardigen(kaartid):
         a=random.choice(kaartilist)
         if a not in kaartid:
             return a
-#tagastab kaarti nime PNGkaartid kaustas
+#tagastab kaarti nime PNGkaartid kausta
 def kaartidimg(kaart):
     folder_dir = "C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid"
     kaartdic= {}
