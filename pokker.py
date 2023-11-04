@@ -39,7 +39,7 @@ vaenlaserahab=Tekstivali(500, 0, 70, 70, red, 0, 7, str(sinuraha), white, screen
 while run:
     #teeb valmis kaartid kuvamiseks
     if ettevalmistus==1 and round==1:
-        for i in range(3): 
+        for i in range(3):         
             kaartid.append(kaardipakk.kaardigen(kaartid))
             print(kaartid)
         for l in range(3):
@@ -86,6 +86,8 @@ while run:
         if active:
             buttonOne.text=user_text
         if event.type == pygame.KEYDOWN and active: 
+            if event.key == pygame.K_0:
+                sinuraha+=100
             if event.key == pygame.K_RETURN:
                 buttonOne.text="RAISE"
                 try:
