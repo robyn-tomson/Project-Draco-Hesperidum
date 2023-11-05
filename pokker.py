@@ -116,8 +116,11 @@ while run:
                 if vaenlaseraise:
                     round+=1
                     ettevalmistus=1
+                    vaenlaseraise=False
         if Button.tee(event, foldpu):
                 vaenlaseraha+=raha
+                print("sa kaotsid")
+                raha=0
                 round=0
                 ettevalmistus=1
                 imp=[]
