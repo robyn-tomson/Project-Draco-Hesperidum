@@ -47,6 +47,7 @@ vaenlaserahab=Tekstivali(500, 0, 70, 70, red, 0, 7, str(sinuraha), white, screen
 while run:
     #teeb valmis kaartid kuvamiseks
     if ettevalmistus==1 and round==1:
+        panus=0
         for i in range(3):         
             kaartid.append(kaardipakk.kaardigen(kaartid))
             print(kaartid)
@@ -54,12 +55,14 @@ while run:
             imp.append(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(kaartid[l])).convert())
             imp2.append(pygame.transform.scale(imp[l], (125, 181)))
         ettevalmistus=0
-    if ettevalmistus==1 and round==2:        
+    if ettevalmistus==1 and round==2:  
+        panus=0     
         kaartid.append(kaardipakk.kaardigen(kaartid))
         imp.append(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(kaartid[-1])).convert())
         imp2.append(pygame.transform.scale(imp[-1], (125, 181)))
         ettevalmistus=0
-    if ettevalmistus==1 and round==3:        
+    if ettevalmistus==1 and round==3: 
+        panus=5     
         kaartid.append(kaardipakk.kaardigen(kaartid))
         imp.append(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(kaartid[-1])).convert())
         imp2.append(pygame.transform.scale(imp[-1], (125, 181)))
