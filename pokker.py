@@ -6,6 +6,8 @@ import kaardipakk
 from kaardipakk import kaartidimg
 from kaardipakk import kaardigen
 import random
+from pokkerikäsi import pokerhand
+from vaenlane import vaenlane
 #MAIN skript
 pygame.init()
 SCREEN_WIDTH=800
@@ -29,10 +31,16 @@ active=False
 run= True
 user_text=""
 panus=5
+raha=0
 sinuraha=100
 vaenlaseraha=100
-buttonOne = Button(150, 150, 200, 200, red, 0, 7, "RAISE", white, screen, pygame.font.Font('freesansbold.ttf', 40))
+vaenlasekäik=False
+vaenlaseraise=False
+call= Button(75, 75, 100, 200, red, 0, 7, "CALL", white, screen, pygame.font.Font('freesansbold.ttf', 40))
+fold=Button(600, 75, 100, 200, red, 0, 7, "FOLD", white, screen, pygame.font.Font('freesansbold.ttf', 40))
+buttonOne = Button(350, 75, 100, 200, red, 0, 7, "RAISE", white, screen, pygame.font.Font('freesansbold.ttf', 40))
 Tekst = Tekstivali(30, 300, 70, 70, (0,0,250), 0, 7, str(round), white, screen, pygame.font.Font('freesansbold.ttf', 40))
+rahab=Tekstivali(130, 300, 70, 70, (0,0,250), 0, 7, str(raha), white, screen, pygame.font.Font('freesansbold.ttf', 40))
 sinurahab=Tekstivali(600, 0, 70, 70, (0,0,250), 0, 7, str(sinuraha), white, screen, pygame.font.Font('freesansbold.ttf', 40))
 vaenlaserahab=Tekstivali(500, 0, 70, 70, red, 0, 7, str(sinuraha), white, screen, pygame.font.Font('freesansbold.ttf', 40))
 #mida kood teeb töö ajal
@@ -46,6 +54,17 @@ while run:
             imp.append(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(kaartid[l])).convert())
             imp2.append(pygame.transform.scale(imp[l], (125, 181)))
         ettevalmistus=0
+    if ettevalmistus==1 and round==2:        
+        kaartid.append(kaardipakk.kaardigen(kaartid))
+        imp.append(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(kaartid[-1])).convert())
+        imp2.append(pygame.transform.scale(imp[-1], (125, 181)))
+        ettevalmistus=0
+    if ettevalmistus==1 and round==3:        
+        kaartid.append(kaardipakk.kaardigen(kaartid))
+        imp.append(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(kaartid[-1])).convert())
+        imp2.append(pygame.transform.scale(imp[-1], (125, 181)))
+        ettevalmistus=0
+        print("sina võitsid")
     if ettevalmistus==1 and round==0:
         for i in range(2): 
             sinukaartid.append(kaardipakk.kaardigen(sinukaartid))
@@ -72,17 +91,41 @@ while run:
     Tekst.text=str(panus)
     sinurahab.drawRect()
     vaenlaserahab.drawRect()
+    rahab.drawRect()
+    fold.drawRect()
     #muudab teksti
     sinurahab.text=str(sinuraha)
     vaenlaserahab.text=str(vaenlaseraha)
+    rahab.text=str(raha)
     #paneb nuppu ekraanile
+    foldpu=fold.drawRect()
     button=buttonOne.drawRect()
+    callpu=call.drawRect()
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
             run=False
         #tuvastab nuppule vajutusi
+        if Button.tee(event, callpu):
+                if vaenlasekäik==False:
+                    raha+=panus
+                    sinuraha-=panus
+                    vaenlasekäik=True
+                if vaenlaseraise:
+                    round+=1
+                    ettevalmistus=1
+        if Button.tee(event, foldpu):
+                vaenlaseraha+=raha
+                round=0
+                ettevalmistus=1
+                imp=[]
+                imp2=[]
+                sinukaartid=[]
+                vaenlasekaartid=[]
+                impsina2=[]
+                impsina=[]
         if Button.tee(event, button):
-                active = True
+                if vaenlasekäik==False:
+                    active = True
         if active:
             buttonOne.text=user_text
         if event.type == pygame.KEYDOWN and active: 
@@ -91,13 +134,12 @@ while run:
             if event.key == pygame.K_RETURN:
                 buttonOne.text="RAISE"
                 try:
-                    if int(user_text)>sinuraha:
+                    if int(user_text)>sinuraha or int(user_text)<=panus:
                         buttonOne.text="vale"
                     else:
-                        panus+=int(user_text)
+                        vaenlasekäik=True
+                        panus=int(user_text)
                         sinuraha-=int(user_text)
-                        round=1
-                        ettevalmistus=1
                 except:
                     user_text=""
                     buttonOne.text="vale"
@@ -107,6 +149,31 @@ while run:
                 user_text= user_text[:-1]
             else: 
                 user_text += event.unicode
+        if vaenlasekäik:
+            tegu=vaenlane(1, round,  sinuraha, vaenlaseraha, panus)
+            print(tegu)
+            if isinstance(tegu, int):
+                panus=tegu
+                raha+=panus
+                vaenlaseraha-=panus
+                vaenlasekäik=False
+                vaenlaseraise=True
+            elif tegu=="call":
+                round+=1
+                ettevalmistus=1
+                raha+=panus
+                vaenlaseraha-=panus
+                vaenlasekäik=False
+            else:
+                sinuraha+=raha
+                round=0
+                ettevalmistus=1
+                imp=[]
+                imp2=[]
+                sinukaartid=[]
+                vaenlasekaartid=[]
+                impsina2=[]
+                impsina=[]
     #uuendab ekraani
     pygame.display.update()
 pygame.quit()

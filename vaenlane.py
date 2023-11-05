@@ -76,4 +76,3 @@ def vaenlane(punktid, round, sinuraha, vaenlaseraha, panus):
                 return "call"
         else:
             return "call"
-print(vaenlane(0.5,0,100,100,10))
