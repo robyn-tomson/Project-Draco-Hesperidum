@@ -31,10 +31,13 @@ run= True
 user_text=""
 panus=5
 raha=0
+vaenpanraha=0
+sinupanraha=0
 sinuraha=100
 vaenlaseraha=100
 vaenlasekäik=False
 vaenlaseraise=False
+sinuraise=True
 tekstväärtus=False
 uusround= Button(100, 200, 50, 400, (50,50,50), 0, 7, "UUS ROUND", white, screen, pygame.font.Font('freesansbold.ttf', 40))
 call= Button(350, 400, 100, 200, red, 0, 7, "CALL", white, screen, pygame.font.Font('freesansbold.ttf', 40))
@@ -121,12 +124,16 @@ while run:
         #tuvastab nuppule vajutusi
         if Button.tee(event, callpu):
                 if vaenlasekäik==False:
+                    sinupanraha+=panus
                     raha+=panus
                     sinuraha-=panus
                     vaenlasekäik=True
                 if vaenlaseraise:
+                    raha+=(panus-sinupanraha)
+                    sinuraha-=(panus-sinupanraha)
                     round+=1
                     ettevalmistus=1
+                    sinupanraha=0
                     vaenlaseraise=False
         if tekstväärtus and Button.tee(event, uusroundpu):
             round=0
@@ -150,7 +157,9 @@ while run:
                     else:
                         vaenlasekäik=True
                         panus=int(user_text)
-                        sinuraha-=int(user_text)
+                        sinuraha-=(int(user_text)-sinupanraha)
+                        raha+=(panus-sinupanraha)
+                        sinupanraha=panus
                 except:
                     user_text=""
                     raisep.text="vale"
@@ -161,19 +170,22 @@ while run:
             else: 
                 user_text += event.unicode
         if vaenlasekäik:
-            tegu=vaenlane(1, round,  sinuraha, vaenlaseraha, panus)
+            tegu=vaenlane(3, round,  sinuraha, vaenlaseraha, panus)
             print(tegu)
             if isinstance(tegu, int):
                 panus=tegu
-                raha+=panus
-                vaenlaseraha-=panus
+                raha+=(panus-vaenpanraha)
+                vaenlaseraha-=(panus-vaenpanraha)
+                vaenpanraha=panus
                 vaenlasekäik=False
                 vaenlaseraise=True
             elif tegu=="call":
+                raha+=(panus-vaenpanraha)
+                vaenlaseraha-=(panus-vaenpanraha)
+                vaenpanraha=0
+                sinupanraha=0
                 round+=1
                 ettevalmistus=1
-                raha+=panus
-                vaenlaseraha-=panus
                 vaenlasekäik=False
             else:
                 tekstväärtus=True
@@ -193,6 +205,8 @@ while run:
         imp=[]
         sinukaartid=[]
         vaenlasekaartid=[]
+        vaenpanraha=0
+        sinupanraha=0
         algus=50
     #uuendab ekraani
     pygame.display.update()
