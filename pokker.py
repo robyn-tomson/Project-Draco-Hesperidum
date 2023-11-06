@@ -21,9 +21,8 @@ round=0
 ettevalmistus=1
 algus=0
 imp=[]
-imp2=[]
 impsina=[]
-impsina2=[]
+impvaenlane=[]
 kaartid=[]
 sinukaartid=[]
 vaenlasekaartid=[]
@@ -49,27 +48,38 @@ vaenlaserahab=Tekstivali(700, 100, 70, 375, red, 0, 7, "vaenlase raha: "+str(vae
 #mida kood teeb töö ajal
 while run:
     #teeb valmis kaartid kuvamiseks
+    if ettevalmistus==1 and round==0:
+        panus=5 
+        raha=0
+        impsina=[]
+        impvaenlane=[]
+        for i in range(2): 
+            sinukaartid.append(kaardipakk.kaardigen(sinukaartid))
+            vaenlasekaartid.append(kaardipakk.kaardigen(vaenlasekaartid))
+            print(kaartid)
+        for l in range(2):
+            impsina.append(pygame.transform.scale(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(sinukaartid[l])).convert(), (125, 181)))
+            impvaenlane.append(pygame.transform.scale(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(vaenlasekaartid[l])).convert(), (125, 181)))
+        ettevalmistus=0
     if ettevalmistus==1 and round==1:
         panus=0
         for i in range(3):         
             kaartid.append(kaardipakk.kaardigen(kaartid))
             print(kaartid)
         for l in range(3):
-            imp.append(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(kaartid[l])).convert())
-            imp2.append(pygame.transform.scale(imp[l], (125, 181)))
+            imp.append(pygame.transform.scale(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(kaartid[l])).convert(), (125, 181)))
         ettevalmistus=0
     if ettevalmistus==1 and round==2:  
         panus=0     
         kaartid.append(kaardipakk.kaardigen(kaartid))
-        imp.append(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(kaartid[-1])).convert())
-        imp2.append(pygame.transform.scale(imp[-1], (125, 181)))
+        imp.append(pygame.transform.scale(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(kaartid[-1])).convert(), (125, 181)))
         ettevalmistus=0
     if ettevalmistus==1 and round==3: 
         panus=5     
         kaartid.append(kaardipakk.kaardigen(kaartid))
-        imp.append(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(kaartid[-1])).convert())
-        imp2.append(pygame.transform.scale(imp[-1], (125, 181)))
+        imp.append(pygame.transform.scale(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(kaartid[-1])).convert(), (125, 181)))
         ettevalmistus=0
+    if round==4:
         if random.randint(1,10)>5:
             sinuraha+=raha
             tekstväärtus=True
@@ -78,48 +88,24 @@ while run:
             tekstväärtus=True
             võitja.text="vaenlane võitis"
             vaenlaseraha+=raha
-        raha=0
-        round=0
-        ettevalmistus=1
-        kaartid=[]
-        imp=[]
-        imp2=[]
-        sinukaartid=[]
-        vaenlasekaartid=[]
-        impsina2=[]
-        impsina=[]
-    if ettevalmistus==1 and round==0:
-        panus=5 
-        raha=0
-        for i in range(2): 
-            sinukaartid.append(kaardipakk.kaardigen(sinukaartid))
-            vaenlasekaartid.append(kaardipakk.kaardigen(vaenlasekaartid))
-            print(kaartid)
-        for l in range(2):
-            impsina.append(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(sinukaartid[l])).convert())
-            impsina2.append(pygame.transform.scale(impsina[l], (125, 181)))
-        ettevalmistus=0
     #täidab ekraani mustaga
     screen.fill((0,150,0))
     #paneb kaartid ekraanile
-    for el in imp2:
+    for el in imp:
         screen.blit(el, (algus, 50))
         algus+=125
     algus=50
-    for al in impsina2:
+    for al in impsina:
         screen.blit(al, (algus, 400))
         algus+=125
     algus=50
     #paneb teksti ekraanile
     Tekst.drawRect()
-    #muudab teksti
     sinurahab.drawRect()
     vaenlaserahab.drawRect()
     rahab.drawRect()
     fold.drawRect()
-    if tekstväärtus:
-        uusroundpu=uusround.drawRect()
-        võitja.drawRect()
+
     #muudab teksti
     sinurahab.text="sinu raha: "+str(sinuraha)
     vaenlaserahab.text="vaenlase raha: "+str(vaenlaseraha)
@@ -143,40 +129,31 @@ while run:
                     ettevalmistus=1
                     vaenlaseraise=False
         if tekstväärtus and Button.tee(event, uusroundpu):
+            round=0
             tekstväärtus=False
         if Button.tee(event, foldpu):
                 vaenlaseraha+=raha
                 tekstväärtus=True
                 võitja.text="vaenlane võitis"
-                raha=0
-                round=0
-                ettevalmistus=1
-                kaartid=[]
-                imp=[]
-                imp2=[]
-                sinukaartid=[]
-                vaenlasekaartid=[]
-                impsina2=[]
-                impsina=[]
                 vaenlaseraha+=raha
         if Button.tee(event, raisepu):
                 if vaenlasekäik==False:
                     active = True
         if active:
-            raisepu.text=user_text
+            raisep.text=user_text
         if event.type == pygame.KEYDOWN and active: 
             if event.key == pygame.K_RETURN:
-                raisepu.text="RAISE"
+                raisep.text="RAISE"
                 try:
                     if int(user_text)>sinuraha or int(user_text)<=panus:
-                        raisepu.text="vale"
+                        raisep.text="vale"
                     else:
                         vaenlasekäik=True
                         panus=int(user_text)
                         sinuraha-=int(user_text)
                 except:
                     user_text=""
-                    raisepu.text="vale"
+                    raisep.text="vale"
                 user_text=""
                 active=False
             elif event.key == pygame.K_BACKSPACE:
@@ -202,15 +179,21 @@ while run:
                 tekstväärtus=True
                 võitja.text="sa võitsid"
                 sinuraha+=raha
-                round=0
-                ettevalmistus=1
-                kaartid=[]
-                imp=[]
-                imp2=[]
-                sinukaartid=[]
-                vaenlasekaartid=[]
-                impsina2=[]
-                impsina=[]
+    if tekstväärtus:
+        uusroundpu=uusround.drawRect()
+        võitja.drawRect()
+        algus=0
+        for ef in impvaenlane:
+            screen.blit(ef, (algus, 0))
+            algus+=125
+        raha=0
+        round=6
+        ettevalmistus=1
+        kaartid=[]
+        imp=[]
+        sinukaartid=[]
+        vaenlasekaartid=[]
+        algus=50
     #uuendab ekraani
     pygame.display.update()
 pygame.quit()
