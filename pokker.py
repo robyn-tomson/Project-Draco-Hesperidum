@@ -59,7 +59,6 @@ while run:
         for i in range(2): 
             sinukaartid.append(kaardipakk.kaardigen(sinukaartid))
             vaenlasekaartid.append(kaardipakk.kaardigen(vaenlasekaartid))
-            print(kaartid)
         for l in range(2):
             impsina.append(pygame.transform.scale(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(sinukaartid[l])).convert(), (125, 181)))
             impvaenlane.append(pygame.transform.scale(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(vaenlasekaartid[l])).convert(), (125, 181)))
@@ -68,7 +67,6 @@ while run:
         panus=0
         for i in range(3):         
             kaartid.append(kaardipakk.kaardigen(kaartid))
-            print(kaartid)
         for l in range(3):
             imp.append(pygame.transform.scale(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(kaartid[l])).convert(), (125, 181)))
         ettevalmistus=0
@@ -94,6 +92,7 @@ while run:
     #täidab ekraani mustaga
     screen.fill((0,150,0))
     #paneb kaartid ekraanile
+    algus=50
     for el in imp:
         screen.blit(el, (algus, 50))
         algus+=125
@@ -124,17 +123,17 @@ while run:
         #tuvastab nuppule vajutusi
         if Button.tee(event, callpu):
                 if vaenlasekäik==False:
-                    sinupanraha+=panus
-                    raha+=panus
-                    sinuraha-=panus
-                    vaenlasekäik=True
-                if vaenlaseraise:
                     raha+=(panus-sinupanraha)
                     sinuraha-=(panus-sinupanraha)
-                    round+=1
-                    ettevalmistus=1
-                    sinupanraha=0
-                    vaenlaseraise=False
+                    sinupanraha+=panus
+                    vaenlasekäik=True
+                    if vaenlaseraise:
+                        round+=1
+                        ettevalmistus=1
+                        sinupanraha=0
+                        vaenpanraha=0
+                        vaenlasekäik=False
+                        vaenlaseraise=False
         if tekstväärtus and Button.tee(event, uusroundpu):
             round=0
             tekstväärtus=False
@@ -142,7 +141,6 @@ while run:
                 vaenlaseraha+=raha
                 tekstväärtus=True
                 võitja.text="vaenlane võitis"
-                vaenlaseraha+=raha
         if Button.tee(event, raisepu):
                 if vaenlasekäik==False:
                     active = True
@@ -207,6 +205,7 @@ while run:
         vaenlasekaartid=[]
         vaenpanraha=0
         sinupanraha=0
+        vaenlaseraise=False
         algus=50
     #uuendab ekraani
     pygame.display.update()
