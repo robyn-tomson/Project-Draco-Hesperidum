@@ -28,39 +28,24 @@ def pokerhand(p_kasi):
                 number.append(i)
         l += 1
     number = sorted(number)
-    if kasi.count('♥') == 5 or kasi.count('♦') == 5 or kasi.count('♣') == 5 or kasi.count('♠') == 5:
-        if number.count('10') == 1 and number.count('11') == 1 and number.count('12') == 1 and number.count('13') == 1 and number.count('14') == 1:
-            z = [temp[temp.index('10')]+temp[temp.index('10') + 1], temp[temp.index('11')]+temp[temp.index('11') + 1], temp[temp.index('12')]+temp[temp.index('12') + 1], temp[temp.index('13')]+temp[temp.index('13') + 1],  temp[temp.index('14')]+temp[temp.index('14') + 1]]
-            return(z)
-        elif number == list(range(min(number), max(number)+1)):
-            z = [] 
-            lin = 0
-            while lin < 5:
-                z.append(temp[temp.index(str(min(number)))] + temp[temp.index(str(min(number))) + 1])
-                temp.pop(temp[temp.index(str(min(number))) + 1], temp[temp.index(str(min(number)))])
-                lin += 1
-            return(z)
-        else:
-            return('Mast')
-    elif number[0] == number[1] and number[0] == number[2] and number[0] == number[3]:
-        return('Nelik')
-    elif number[1] == number[2] and number[1] == number[3] and number[1] == number[4]:
-        return('Nelik')
-    elif number[0] == number[1] and number[0] == number[2] and number[3] == number[4]:
-        return('Maja')
-    elif number[0] == number[1] and number[2] == number[3] and number[2] == number[4]:
-        return('Maja')
-    elif number == list(range(min(number), max(number)+1)):
-        return('Rida')
-    elif number[0] == number[1] and number[0] == number[2]:
-        return('Kolmik')
-    elif number[2] == number[3] and number[2] == number[4]:
-        return('Kolmik')
-    elif number[0] == number[1] and number[2] == number[3] or number[0] == number[1] and number[3] == number[4]:
-        return('Kaks paari')
-    elif number[3] == number[4] and number[0] == number[1] or number[3] == number[4] and number[1] == number[2]:
-        return('Kaks paari')
-    elif number[0] == number[1] or number[1] == number[2] or number[2] == number[3] or number[3] == number[4]:
-        return('Üks paar')
-    else:
-        return('Kõrge kaart')
+    if kasi.count('♥') == 5 or kasi.count('♦') == 5 or kasi.count('♣') == 5 or kasi.count('♠') == 5: # mast/mastirida/kuninglikmastirida
+        if number.count('10') == 1 and number.count('11') == 1 and number.count('12') == 1 and number.count('13') == 1 and number.count('14') == 1: # kuninglik mastirida
+            return(10 + number[-1] / 10 + number[-2] / 1000 + number[-3] / 100000 + number[-4] / 10000000 + number[-5] / 1000000000)
+        elif number == list(range(min(number), max(number)+1)): # mastirida
+            return(9 + number[-1] / 10 + number[-2] / 1000 + number[-3] / 100000 + number[-4] / 10000000 + number[-5] / 1000000000)
+        else: # mast
+            return(8 + number[-1] / 10 + number[-2] / 1000 + number[-3] / 100000 + number[-4] / 10000000 + number[-5] / 1000000000)
+    elif number[0] == number[1] and number[0] == number[2] and number[0] == number[3] or number[1] == number[2] and number[1] == number[3] and number[1] == number[4]: #  nelik
+        return(7 + number[-1] / 10 + number[-2] / 1000 + number[-3] / 100000 + number[-4] / 10000000 + number[-5] / 1000000000)
+    elif number[0] == number[1] and number[2] == number[3] and number[2] == number[4] or number[0] == number[1] and number[0] == number[2] and number[3] == number[4]: # maja
+        return(6 + number[-1] / 10 + number[-2] / 1000 + number[-3] / 100000 + number[-4] / 10000000 + number[-5] / 1000000000)
+    elif number == list(range(min(number), max(number)+1)): # rida
+        return(5 + number[-1] / 10 + number[-2] / 1000 + number[-3] / 100000 + number[-4] / 10000000 + number[-5] / 1000000000)
+    elif number[2] == number[3] and number[2] == number[4]  or number[0] == number[1] and number[0] == number[2]: # kolmik
+        return(4 + number[-1] / 10 + number[-2] / 1000 + number[-3] / 100000 + number[-4] / 10000000 + number[-5] / 1000000000)
+    elif number[3] == number[4] and number[0] == number[1] or number[3] == number[4] and number[1] == number[2] or number[0] == number[1] and number[2] == number[3] or number[0] == number[1] and number[3] == number[4]: # 2 paar
+        return(3 + number[-1] / 10 + number[-2] / 1000 + number[-3] / 100000 + number[-4] / 10000000 + number[-5] / 1000000000)
+    elif number[0] == number[1] or number[1] == number[2] or number[2] == number[3] or number[3] == number[4]: # 1 paar
+        return(2 + number[-1] / 10 + number[-2] / 1000 + number[-3] / 100000 + number[-4] / 10000000 + number[-5] / 1000000000)
+    else: #suurim kaart
+        return(1 + number[-1] / 10 + number[-2] / 1000 + number[-3] / 100000 + number[-4] / 10000000 + number[-5] / 1000000000)
