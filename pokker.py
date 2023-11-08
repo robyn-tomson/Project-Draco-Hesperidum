@@ -81,14 +81,19 @@ while run:
         imp.append(pygame.transform.scale(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(kaartid[-1])).convert(), (125, 181)))
         ettevalmistus=0
     if round==4:
-        if random.randint(1,10)>5:
+        if pokerhand(sinukaartid+kaartid)>pokerhand(vaenlasekaartid+kaartid):
             sinuraha+=raha
             tekstväärtus=True
             võitja.text="sa võitsid"
-        else:
+        elif pokerhand(sinukaartid+kaartid)<pokerhand(vaenlasekaartid+kaartid):
             tekstväärtus=True
             võitja.text="vaenlane võitis"
             vaenlaseraha+=raha
+        else:
+            tekstväärtus=True
+            võitja.text="viik"
+            vaenlaseraha+=raha//2
+            sinuraha+=raha//2
     #täidab ekraani mustaga
     screen.fill((0,150,0))
     #paneb kaartid ekraanile
@@ -168,7 +173,7 @@ while run:
             else: 
                 user_text += event.unicode
         if vaenlasekäik:
-            tegu=vaenlane(3, round,  sinuraha, vaenlaseraha, panus)
+            tegu=vaenlane(pokerhand(vaenlasekaartid+kaartid), round,  sinuraha, vaenlaseraha, panus)
             print(tegu)
             if isinstance(tegu, int):
                 panus=tegu
