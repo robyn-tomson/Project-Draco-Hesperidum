@@ -45,4 +45,4 @@ def pokerhand(p_kasi):
     else: #suurim kaart
         return(1 + number[-1] / 100 + number[-2] / 10000 + number[-3] / 1000000 + number[-4] / 100000000 + number[-5] / 10000000000)
 
-#print(pokerhand('2♥3♥4♥5♥6♥'))
+print(pokerhand('2♥3♥4♥5♥6♥'))
