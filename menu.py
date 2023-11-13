@@ -35,6 +35,9 @@ def menu(screen):
     text = smallfont.render('quit' , True , color)  
     text2 = smallfont.render('start' , True , color)
     text3 = smallfont.render('settings' , True , color)
+
+    pygame.mixer.music.load("Project-Draco-Hesperidum\\muusika\\menu.mp3")#music file 
+    pygame.mixer.music.play(-1)
   
     while True:  
       
@@ -45,14 +48,16 @@ def menu(screen):
               
             #checks if a mouse is clicked  
             if ev.type == pygame.MOUSEBUTTONDOWN:  
-              
+                
             #if the mouse is clicked on the  
             # button the game is terminated  
                 if width/2 <= mouse[0] <= width/2+140 and height/2 <= mouse[1] <= height/2+40:  
-                    pygame.quit() 
+                    return "quit"
                 if width/2 <= mouse[0] <= width/2+140 and height/3 <= mouse[1] <= height/3+40:  
+                    pygame.mixer.music.stop()
                     return screen
                 if width/2 <= mouse[0] <= width/2+140 and height/2.4 <= mouse[1] <= height/2.4+40:  
+                    pygame.mixer.music.stop()
                     return screen
                   
     # fills the screen with a color  
