@@ -1,4 +1,5 @@
 import pygame
+from menu import menu
 from button import Button
 from button import Tekstivali
 from button import set_text
@@ -49,6 +50,7 @@ rahab=Tekstivali(250, 300, 70, 200, (0,0,250), 0, 7, "hunnik: "+str(raha), white
 sinurahab=Tekstivali(700, 0, 70, 375, (0,0,250), 0, 7, "sinu raha: "+str(sinuraha), white, screen, pygame.font.Font('freesansbold.ttf', 40))
 vaenlaserahab=Tekstivali(700, 100, 70, 375, red, 0, 7, "vaenlase raha: "+str(vaenlaseraha), white, screen, pygame.font.Font('freesansbold.ttf', 40))
 #mida kood teeb töö ajal
+screen=menu(screen)
 while run:
     #teeb valmis kaartid kuvamiseks
     if ettevalmistus==1 and round==0:
