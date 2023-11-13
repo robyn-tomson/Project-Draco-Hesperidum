@@ -2,7 +2,7 @@ import pygame
 import sys  
   
   
-def menu(screen):
+def kaotusvõit(screen, seis):
     # initializing the constructor  
     pygame.init()  
   
@@ -28,13 +28,18 @@ def menu(screen):
     height = screen.get_height()  
   
     # defining a font  
-    smallfont = pygame.font.SysFont('Corbel',35)  
+    smallfont = pygame.font.SysFont('Corbel',35)
+    bigfont = pygame.font.SysFont('Corbel',60 )  
   
     # rendering a text written in  
     # this font  
     text = smallfont.render('quit' , True , color)  
-    text2 = smallfont.render('start' , True , color)
-    text3 = smallfont.render('settings' , True , color)
+    text2 = smallfont.render('new game' , True , color)
+    if seis=="kaotus":
+        text3=bigfont.render('SA KAOTASID' , True , color)
+    else:
+        text3=bigfont.render('SA KAOTASID' , True , color)
+
 
     pygame.mixer.music.load("Project-Draco-Hesperidum\\muusika\\menu.mp3")#music file 
     pygame.mixer.music.play(-1)
@@ -56,9 +61,7 @@ def menu(screen):
                 if width/2 <= mouse[0] <= width/2+140 and height/3 <= mouse[1] <= height/3+40:  
                     pygame.mixer.music.stop()
                     return "pokker"
-                if width/2 <= mouse[0] <= width/2+140 and height/2.4 <= mouse[1] <= height/2.4+40:  
-                    pygame.mixer.music.stop()
-                    return "pokker"
+
                   
     # fills the screen with a color  
         screen.fill((60,25,60))  
@@ -80,17 +83,11 @@ def menu(screen):
           
         else:  
             pygame.draw.rect(screen,color_dark,[width/2,height/3,140,40])
-
-        if width/2 <= mouse[0] <= width/2+140 and height/2.4 <= mouse[1] <= height/2.4+40:  
-            pygame.draw.rect(screen,color_light,[width/2,height/2.4,140,40])  
-          
-        else:  
-            pygame.draw.rect(screen,color_dark,[width/2,height/2.4,140,40])
-      
+        pygame.draw.rect(screen,color_dark,[width/2,height/5,280,80])
     # superimposing the text onto our button  
         screen.blit(text , (width/2+30,height/2)) 
         screen.blit(text2 , (width/2+30,height/3))
-        screen.blit(text3 , (width/2+30,height/2.4))  
+        screen.blit(text3 , (width/2+30,height/5))
       
     # updates the frames of the game  
         pygame.display.update()  
