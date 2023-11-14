@@ -15,4 +15,7 @@ while True:
       koht=kaotusvõit(screen, "võit")
     if koht=="kaotus":
       koht=kaotusvõit(screen, "kaotus")
-    
+    try:
+      pygame.display.update()
+    except:
+      break

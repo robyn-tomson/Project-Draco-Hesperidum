@@ -58,7 +58,7 @@ def kaotusvõit(screen, seis):
             # button the game is terminated  
                 if width/2 <= mouse[0] <= width/2+140 and height/2 <= mouse[1] <= height/2+40:  
                     pygame.quit()
-                if width/2 <= mouse[0] <= width/2+140 and height/3 <= mouse[1] <= height/3+40:  
+                if width/2 <= mouse[0] <= width/2+200 and height/3 <= mouse[1] <= height/3+40:  
                     pygame.mixer.music.stop()
                     return "pokker"
 
@@ -78,12 +78,12 @@ def kaotusvõit(screen, seis):
         else:  
             pygame.draw.rect(screen,color_dark,[width/2,height/2,140,40])
 
-        if width/2 <= mouse[0] <= width/2+140 and height/3 <= mouse[1] <= height/3+40:  
-            pygame.draw.rect(screen,color_light,[width/2,height/3,140,40])  
+        if width/2 <= mouse[0] <= width/2+200 and height/3 <= mouse[1] <= height/3+40:  
+            pygame.draw.rect(screen,color_light,[width/2,height/3,200,40])  
           
         else:  
-            pygame.draw.rect(screen,color_dark,[width/2,height/3,140,40])
-        pygame.draw.rect(screen,color_dark,[width/2,height/5,280,80])
+            pygame.draw.rect(screen,color_dark,[width/2,height/3,200,40])
+        pygame.draw.rect(screen,color_dark,[width/2-200,height/5,400,80])
     # superimposing the text onto our button  
         screen.blit(text , (width/2+30,height/2)) 
         screen.blit(text2 , (width/2+30,height/3))
