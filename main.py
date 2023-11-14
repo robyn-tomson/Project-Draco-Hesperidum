@@ -7,6 +7,7 @@ SCREEN_HEIGHT=700
 screen=pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 koht="menu"
 while True:
+    
     if koht=="menu":
       koht=menu(screen)
     if koht=="pokker":

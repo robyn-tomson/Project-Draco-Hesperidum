@@ -1,6 +1,8 @@
 import pygame  
 import sys  
-  
+import pygame_widgets
+from pygame_widgets.slider import Slider
+from pygame_widgets.textbox import TextBox
   
 def menu(screen):
     # initializing the constructor  
@@ -12,6 +14,8 @@ def menu(screen):
   
     # white color  
     color = (255,255,255)  
+
+    settings=False
   
     # light shade of the button  
     color_light = (170,170,170)  
@@ -36,6 +40,13 @@ def menu(screen):
     text2 = smallfont.render('start' , True , color)
     text3 = smallfont.render('settings' , True , color)
 
+    slider = Slider(screen, 40, 60, 100, 20, min=0, max=99, step=1)
+    slider.value=100
+    output = TextBox(screen, 130, 0, 50, 50, fontSize=30)
+    textset = smallfont.render('volume' , True , (0,0,0))
+
+    output.disable()
+
     pygame.mixer.music.load("Project-Draco-Hesperidum\\muusika\\menu.mp3")#music file 
     pygame.mixer.music.play(-1)
   
@@ -56,10 +67,12 @@ def menu(screen):
                 if width/2 <= mouse[0] <= width/2+140 and height/3 <= mouse[1] <= height/3+40:  
                     pygame.mixer.music.stop()
                     return "pokker"
-                if width/2 <= mouse[0] <= width/2+140 and height/2.4 <= mouse[1] <= height/2.4+40:  
-                    pygame.mixer.music.stop()
-                    return "pokker"
-                  
+                if width/2 <= mouse[0] <= width/2+140 and height/2.4 <= mouse[1] <= height/2.4+40: 
+                    if settings==True:
+                        settings=False
+                    else:
+                        settings=True 
+
     # fills the screen with a color  
         screen.fill((60,25,60))  
       
@@ -91,6 +104,11 @@ def menu(screen):
         screen.blit(text , (width/2+30,height/2)) 
         screen.blit(text2 , (width/2+30,height/3))
         screen.blit(text3 , (width/2+30,height/2.4))  
-      
+        if settings:
+            pygame.draw.rect(screen,(255,255,100),[0,0,200,200])
+            screen.blit(textset , (10,10))
+            output.setText(slider.getValue())
+            pygame.mixer.music.set_volume(slider.getValue()/100)
+            pygame_widgets.update(ev)
     # updates the frames of the game  
         pygame.display.update()  
