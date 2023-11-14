@@ -1,13 +1,14 @@
 import pygame
 from button import Button
 from button import Tekstivali
-from button import set_text
 import kaardipakk
 from kaardipakk import kaartidimg
 from kaardipakk import kaardigen
-import random
 from pokkerikäsi import pokerhand
 from vaenlane import vaenlane
+import pygame_widgets
+from pygame_widgets.slider import Slider
+from pygame_widgets.textbox import TextBox
 #MAIN skript
 
 def pokker1(screen):
@@ -16,7 +17,7 @@ def pokker1(screen):
     white = (255,255,255)
     #teeb nuppu, ei ole veel ekraanile kuvatud
     #vajalikud muutujad
-    round=0
+    rounds=0
     ettevalmistus=1
     algus=0
     imp=[]
@@ -36,7 +37,6 @@ def pokker1(screen):
     vaenlaseraha=100
     vaenlasekäik=False
     vaenlaseraise=False
-    sinuraise=True
     tekstväärtus=False
     uusround= Button(100, 200, 50, 400, (50,50,50), 0, 7, "UUS ROUND", white, screen, pygame.font.Font('freesansbold.ttf', 40))
     call= Button(350, 400, 100, 200, red, 0, 7, "CALL", white, screen, pygame.font.Font('freesansbold.ttf', 40))
@@ -50,9 +50,17 @@ def pokker1(screen):
     #mida kood teeb töö ajal
     pygame.mixer.music.load("Project-Draco-Hesperidum\\muusika\\mang.mp3")#music file 
     pygame.mixer.music.play(-1)
+    settings=False
+    smallfont = pygame.font.SysFont('Corbel',35)
+    slider = Slider(screen, 40, 165, 100, 20, min=0, max=99, step=1)
+    slider.value=round(pygame.mixer.music.get_volume()*100)+1
+    output = TextBox(screen, 130, 100, 50, 50, fontSize=30)
+    textset = smallfont.render('volume' , True , (0,0,0))
+    settingsp=Button(0, 0, 50, 200, red, 0, 7, "Settings", white, screen, pygame.font.Font('freesansbold.ttf', 30))
+    output.disable()
     while run:
     #teeb valmis kaartid kuvamiseks
-        if ettevalmistus==1 and round==0:
+        if ettevalmistus==1 and rounds==0:
             panus=5 
             raha=0
             impsina=[]
@@ -64,25 +72,25 @@ def pokker1(screen):
                 impsina.append(pygame.transform.scale(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(sinukaartid[l])).convert(), (125, 181)))
                 impvaenlane.append(pygame.transform.scale(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(vaenlasekaartid[l])).convert(), (125, 181)))
             ettevalmistus=0
-        if ettevalmistus==1 and round==1:
+        if ettevalmistus==1 and rounds==1:
             panus=0
             for i in range(3):         
                 kaartid.append(kaardipakk.kaardigen(kaartid))
             for l in range(3):
                 imp.append(pygame.transform.scale(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(kaartid[l])).convert(), (125, 181)))
             ettevalmistus=0
-        if ettevalmistus==1 and round==2:  
+        if ettevalmistus==1 and rounds==2:  
             panus=0     
             kaartid.append(kaardipakk.kaardigen(kaartid))
             imp.append(pygame.transform.scale(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(kaartid[-1])).convert(), (125, 181)))
             ettevalmistus=0
-        if ettevalmistus==1 and round==3: 
+        if ettevalmistus==1 and rounds==3: 
             panus=5     
             kaartid.append(kaardipakk.kaardigen(kaartid))
             imp.append(pygame.transform.scale(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(kaartid[-1])).convert(), (125, 181)))
             ettevalmistus=0
-        if round==4:
-            round=6
+        if rounds==4:
+            rounds=6
             if pokerhand(sinukaartid+kaartid)>pokerhand(vaenlasekaartid+kaartid):
                 sinuraha+=raha
                 tekstväärtus=True
@@ -117,7 +125,6 @@ def pokker1(screen):
         sinurahab.drawRect()
         vaenlaserahab.drawRect()
         rahab.drawRect()
-        fold.drawRect()
 
         #muudab teksti
         sinurahab.text="sinu raha: "+str(sinuraha)
@@ -128,14 +135,15 @@ def pokker1(screen):
         foldpu=fold.drawRect()
         raisepu=raisep.drawRect()
         callpu=call.drawRect()
+        settingspu=settingsp.drawRect()
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
                 run=False
             #tuvastab nuppule vajutusi
             if tekstväärtus and Button.tee(event, uusroundpu):
-                    round=0
+                    rounds=0
                     tekstväärtus=False
-            if round!=6:
+            if rounds!=6:
                 if Button.tee(event, callpu):
                         if vaenlasekäik==False:
                             raha+=(panus-sinupanraha)
@@ -143,14 +151,14 @@ def pokker1(screen):
                             sinupanraha+=panus
                             vaenlasekäik=True
                             if vaenlaseraise:
-                                round+=1
+                                rounds+=1
                                 ettevalmistus=1
                                 sinupanraha=0
                                 vaenpanraha=0
                                 vaenlasekäik=False
                                 vaenlaseraise=False
                 if Button.tee(event, foldpu):
-                        round=6
+                        rounds=6
                         vaenlaseraha+=raha
                         tekstväärtus=True
                         võitja.text="vaenlane võitis"
@@ -180,28 +188,39 @@ def pokker1(screen):
                         user_text= user_text[:-1]
                     else: 
                         user_text += event.unicode
-            if vaenlasekäik:
-                tegu=vaenlane(pokerhand(vaenlasekaartid+kaartid), round,  sinuraha, vaenlaseraha, panus)
-                print(tegu)
-                if isinstance(tegu, int):
-                    panus=tegu
-                    raha+=(panus-vaenpanraha)
-                    vaenlaseraha-=(panus-vaenpanraha)
-                    vaenpanraha=panus
-                    vaenlasekäik=False
-                    vaenlaseraise=True
-                elif tegu=="call":
-                    raha+=(panus-vaenpanraha)
-                    vaenlaseraha-=(panus-vaenpanraha)
-                    vaenpanraha=0
-                    sinupanraha=0
-                    round+=1
-                    ettevalmistus=1
-                    vaenlasekäik=False
-                else:
-                    tekstväärtus=True
-                    võitja.text="sa võitsid"
-                    sinuraha+=raha
+                if Button.tee(event, settingspu):
+                    if settings==True:
+                        settings=False
+                    else:
+                        settings=True
+        if settings:
+            pygame.draw.rect(screen,(255,255,100),[0,100,200,200])
+            screen.blit(textset , (10,110))
+            output.setText(slider.getValue())
+            pygame.mixer.music.set_volume(slider.getValue()/100)
+            pygame_widgets.update(event)
+        if vaenlasekäik:
+            tegu=vaenlane(pokerhand(vaenlasekaartid+kaartid), rounds,  sinuraha, vaenlaseraha, panus)
+            print(tegu)
+            if isinstance(tegu, int):
+                panus=tegu
+                raha+=(panus-vaenpanraha)
+                vaenlaseraha-=(panus-vaenpanraha)
+                vaenpanraha=panus
+                vaenlasekäik=False
+                vaenlaseraise=True
+            elif tegu=="call":
+                raha+=(panus-vaenpanraha)
+                vaenlaseraha-=(panus-vaenpanraha)
+                vaenpanraha=0
+                sinupanraha=0
+                rounds+=1
+                ettevalmistus=1
+                vaenlasekäik=False
+            else:
+                tekstväärtus=True
+                võitja.text="sa võitsid"
+                sinuraha+=raha
         if tekstväärtus:
             uusroundpu=uusround.drawRect()
             võitja.drawRect()

@@ -41,7 +41,7 @@ def menu(screen):
     text3 = smallfont.render('settings' , True , color)
 
     slider = Slider(screen, 40, 60, 100, 20, min=0, max=99, step=1)
-    slider.value=100
+    slider.value=round(pygame.mixer.music.get_volume()*100)+1
     output = TextBox(screen, 130, 0, 50, 50, fontSize=30)
     textset = smallfont.render('volume' , True , (0,0,0))
 
@@ -65,6 +65,8 @@ def menu(screen):
                 if width/2 <= mouse[0] <= width/2+140 and height/2 <= mouse[1] <= height/2+40:  
                     pygame.quit()
                 if width/2 <= mouse[0] <= width/2+140 and height/3 <= mouse[1] <= height/3+40:  
+                    pygame_widgets.WidgetHandler.removeWidget(slider)
+                    pygame_widgets.WidgetHandler.removeWidget(output)
                     pygame.mixer.music.stop()
                     return "pokker"
                 if width/2 <= mouse[0] <= width/2+140 and height/2.4 <= mouse[1] <= height/2.4+40: 
