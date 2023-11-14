@@ -150,6 +150,7 @@ def pokker1(screen):
                                 vaenlasekäik=False
                                 vaenlaseraise=False
                 if Button.tee(event, foldpu):
+                        round=6
                         vaenlaseraha+=raha
                         tekstväärtus=True
                         võitja.text="vaenlane võitis"
