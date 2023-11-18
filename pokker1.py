@@ -63,31 +63,32 @@ def pokker1(screen):
         if ettevalmistus==1 and rounds==0:
             panus=5 
             raha=0
+            imp=[]
             impsina=[]
             impvaenlane=[]
             for i in range(2): 
                 sinukaartid.append(kaardipakk.kaardigen(sinukaartid))
                 vaenlasekaartid.append(kaardipakk.kaardigen(vaenlasekaartid))
             for l in range(2):
-                impsina.append(pygame.transform.scale(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(sinukaartid[l])).convert(), (125, 181)))
-                impvaenlane.append(pygame.transform.scale(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(vaenlasekaartid[l])).convert(), (125, 181)))
+                impsina.append(pygame.transform.scale(pygame.image.load("Project-Draco-Hesperidum\\PNGkaartid\\"+kaardipakk.kaartidimg(sinukaartid[l])).convert(), (125, 181)))
+                impvaenlane.append(pygame.transform.scale(pygame.image.load("Project-Draco-Hesperidum\\PNGkaartid\\"+kaardipakk.kaartidimg(vaenlasekaartid[l])).convert(), (125, 181)))
             ettevalmistus=0
         if ettevalmistus==1 and rounds==1:
             panus=0
             for i in range(3):         
                 kaartid.append(kaardipakk.kaardigen(kaartid))
             for l in range(3):
-                imp.append(pygame.transform.scale(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(kaartid[l])).convert(), (125, 181)))
+                imp.append(pygame.transform.scale(pygame.image.load("Project-Draco-Hesperidum\\PNGkaartid\\"+kaardipakk.kaartidimg(kaartid[l])).convert(), (125, 181)))
             ettevalmistus=0
         if ettevalmistus==1 and rounds==2:  
             panus=0     
             kaartid.append(kaardipakk.kaardigen(kaartid))
-            imp.append(pygame.transform.scale(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(kaartid[-1])).convert(), (125, 181)))
+            imp.append(pygame.transform.scale(pygame.image.load("Project-Draco-Hesperidum\\PNGkaartid\\"+kaardipakk.kaartidimg(kaartid[-1])).convert(), (125, 181)))
             ettevalmistus=0
         if ettevalmistus==1 and rounds==3: 
             panus=5     
             kaartid.append(kaardipakk.kaardigen(kaartid))
-            imp.append(pygame.transform.scale(pygame.image.load("C:\\Users\\kasutaja\\Projekt\\pokker\\PNGkaartid\\"+kaardipakk.kaartidimg(kaartid[-1])).convert(), (125, 181)))
+            imp.append(pygame.transform.scale(pygame.image.load("Project-Draco-Hesperidum\\PNGkaartid\\"+kaardipakk.kaartidimg(kaartid[-1])).convert(), (125, 181)))
             ettevalmistus=0
         if rounds==4:
             rounds=6
@@ -231,7 +232,6 @@ def pokker1(screen):
             raha=0
             ettevalmistus=1
             kaartid=[]
-            imp=[]
             sinukaartid=[]
             vaenlasekaartid=[]
             vaenpanraha=0
