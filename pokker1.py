@@ -38,13 +38,15 @@ def pokker1(screen):
     vaenlasekäik=False
     vaenlaseraise=False
     tekstväärtus=False
+    timer=0.0
     uusround= Button(100, 200, 50, 400, (50,50,50), 0, 7, "UUS ROUND", white, screen, pygame.font.Font('freesansbold.ttf', 40))
-    call= Button(350, 400, 100, 200, red, 0, 7, "CALL", white, screen, pygame.font.Font('freesansbold.ttf', 40))
-    fold=Button(875, 400, 100, 200, red, 0, 7, "FOLD", white, screen, pygame.font.Font('freesansbold.ttf', 40))
-    raisep = Button(625, 400, 100, 200, red, 0, 7, "RAISE", white, screen, pygame.font.Font('freesansbold.ttf', 40))
-    Tekst = Tekstivali(30, 300, 70, 200, (0,0,250), 0, 7, "panus: "+str(panus), white, screen, pygame.font.Font('freesansbold.ttf', 40))
-    võitja = Tekstivali(600, 300, 50, 400, (0,0,250), 0, 7, "", white, screen, pygame.font.Font('freesansbold.ttf', 40))
-    rahab=Tekstivali(250, 300, 70, 200, (0,0,250), 0, 7, "hunnik: "+str(raha), white, screen, pygame.font.Font('freesansbold.ttf', 40))
+    call= Button(350, 550, 100, 200, red, 0, 7, "CALL", white, screen, pygame.font.Font('freesansbold.ttf', 40))
+    fold=Button(875, 550, 100, 200, red, 0, 7, "FOLD", white, screen, pygame.font.Font('freesansbold.ttf', 40))
+    raisep = Button(625, 550, 100, 200, red, 0, 7, "RAISE", white, screen, pygame.font.Font('freesansbold.ttf', 40))
+    Tekst = Tekstivali(660, 240, 70, 200, (0,0,250), 0, 7, "panus: "+str(panus), white, screen, pygame.font.Font('freesansbold.ttf', 40))
+    võitja = Tekstivali(100, 100, 50, 400, (0,0,250), 0, 7, "", white, screen, pygame.font.Font('freesansbold.ttf', 40))
+    vaenlasebet=Tekstivali(500, 350, 150, 300, red, 0, 7, "", white, screen, pygame.font.Font('freesansbold.ttf', 40))
+    rahab=Tekstivali(880, 240, 70, 200, (0,0,250), 0, 7, "hunnik: "+str(raha), white, screen, pygame.font.Font('freesansbold.ttf', 40))
     sinurahab=Tekstivali(700, 0, 70, 375, (0,0,250), 0, 7, "sinu raha: "+str(sinuraha), white, screen, pygame.font.Font('freesansbold.ttf', 40))
     vaenlaserahab=Tekstivali(700, 100, 70, 375, red, 0, 7, "vaenlase raha: "+str(vaenlaseraha), white, screen, pygame.font.Font('freesansbold.ttf', 40))
     #mida kood teeb töö ajal
@@ -60,6 +62,7 @@ def pokker1(screen):
     output.disable()
     while run:
     #teeb valmis kaartid kuvamiseks
+        clock = pygame.time.Clock()
         if ettevalmistus==1 and rounds==0:
             panus=5 
             raha=0
@@ -118,7 +121,7 @@ def pokker1(screen):
             algus+=125
         algus=50
         for al in impsina:
-            screen.blit(al, (algus, 400))
+            screen.blit(al, (algus, 470))
             algus+=125
         algus=50
         #paneb teksti ekraanile
@@ -126,7 +129,8 @@ def pokker1(screen):
         sinurahab.drawRect()
         vaenlaserahab.drawRect()
         rahab.drawRect()
-
+        clock.tick()
+        print(clock.get_fps())
         #muudab teksti
         sinurahab.text="sinu raha: "+str(sinuraha)
         vaenlaserahab.text="vaenlase raha: "+str(vaenlaseraha)
@@ -137,6 +141,9 @@ def pokker1(screen):
         raisepu=raisep.drawRect()
         callpu=call.drawRect()
         settingspu=settingsp.drawRect()
+        if timer>0:
+            timer-=1
+            vaenlasebet.drawRect()
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
                 run=False
@@ -210,6 +217,9 @@ def pokker1(screen):
                 vaenpanraha=panus
                 vaenlasekäik=False
                 vaenlaseraise=True
+                vaenlasebet.text="vaenlane raiseis "+str(panus-vaenpanraha)
+                clock.tick()
+                timer=5*clock.get_fps()
             elif tegu=="call":
                 raha+=(panus-vaenpanraha)
                 vaenlaseraha-=(panus-vaenpanraha)
@@ -218,16 +228,22 @@ def pokker1(screen):
                 rounds+=1
                 ettevalmistus=1
                 vaenlasekäik=False
+                vaenlasebet.text="vaenlane callis"
+                clock.tick()
+                timer=5*clock.get_fps()
             else:
                 tekstväärtus=True
                 võitja.text="sa võitsid"
                 sinuraha+=raha
+                vaenlasebet.text="vaenlane foldis"
+                clock.tick()
+                timer=5*clock.get_fps()
         if tekstväärtus:
             uusroundpu=uusround.drawRect()
             võitja.drawRect()
-            algus=0
+            algus=50
             for ef in impvaenlane:
-                screen.blit(ef, (algus, 0))
+                screen.blit(ef, (algus, 250))
                 algus+=125
             raha=0
             ettevalmistus=1
