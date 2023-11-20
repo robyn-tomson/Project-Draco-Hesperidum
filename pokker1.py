@@ -39,13 +39,15 @@ def pokker1(screen):
     vaenlaseraise=False
     tekstväärtus=False
     timer=0.0
+    clock = pygame.time.Clock()
     uusround= Button(100, 200, 50, 400, (50,50,50), 0, 7, "UUS ROUND", white, screen, pygame.font.Font('freesansbold.ttf', 40))
     call= Button(350, 550, 100, 200, red, 0, 7, "CALL", white, screen, pygame.font.Font('freesansbold.ttf', 40))
     fold=Button(875, 550, 100, 200, red, 0, 7, "FOLD", white, screen, pygame.font.Font('freesansbold.ttf', 40))
     raisep = Button(625, 550, 100, 200, red, 0, 7, "RAISE", white, screen, pygame.font.Font('freesansbold.ttf', 40))
     Tekst = Tekstivali(660, 240, 70, 200, (0,0,250), 0, 7, "panus: "+str(panus), white, screen, pygame.font.Font('freesansbold.ttf', 40))
     võitja = Tekstivali(100, 100, 50, 400, (0,0,250), 0, 7, "", white, screen, pygame.font.Font('freesansbold.ttf', 40))
-    vaenlasebet=Tekstivali(500, 350, 150, 300, red, 0, 7, "", white, screen, pygame.font.Font('freesansbold.ttf', 40))
+    vaenlasebet=Tekstivali(100, 250, 150, 390, red, 0, 7, "", white, screen, pygame.font.Font('freesansbold.ttf', 40))
+    sinupanus=Tekstivali(740, 350, 70, 300, (0,0,250), 0, 7, "", white, screen, pygame.font.Font('freesansbold.ttf', 40))
     rahab=Tekstivali(880, 240, 70, 200, (0,0,250), 0, 7, "hunnik: "+str(raha), white, screen, pygame.font.Font('freesansbold.ttf', 40))
     sinurahab=Tekstivali(700, 0, 70, 375, (0,0,250), 0, 7, "sinu raha: "+str(sinuraha), white, screen, pygame.font.Font('freesansbold.ttf', 40))
     vaenlaserahab=Tekstivali(700, 100, 70, 375, red, 0, 7, "vaenlase raha: "+str(vaenlaseraha), white, screen, pygame.font.Font('freesansbold.ttf', 40))
@@ -62,7 +64,6 @@ def pokker1(screen):
     output.disable()
     while run:
     #teeb valmis kaartid kuvamiseks
-        clock = pygame.time.Clock()
         if ettevalmistus==1 and rounds==0:
             panus=5 
             raha=0
@@ -128,10 +129,10 @@ def pokker1(screen):
         Tekst.drawRect()
         sinurahab.drawRect()
         vaenlaserahab.drawRect()
+        sinupanus.drawRect()
         rahab.drawRect()
-        clock.tick()
-        print(clock.get_fps())
         #muudab teksti
+        sinupanus.text="sinu panus: " +str(sinupanraha)
         sinurahab.text="sinu raha: "+str(sinuraha)
         vaenlaserahab.text="vaenlase raha: "+str(vaenlaseraha)
         Tekst.text="panus: "+str(panus)
@@ -143,7 +144,10 @@ def pokker1(screen):
         settingspu=settingsp.drawRect()
         if timer>0:
             timer-=1
-            vaenlasebet.drawRect()
+            if rounds !=6:
+                vaenlasebet.drawRect()
+            else:
+                timer=0
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
                 run=False
@@ -214,12 +218,11 @@ def pokker1(screen):
                 panus=tegu
                 raha+=(panus-vaenpanraha)
                 vaenlaseraha-=(panus-vaenpanraha)
-                vaenpanraha=panus
                 vaenlasekäik=False
                 vaenlaseraise=True
                 vaenlasebet.text="vaenlane raiseis "+str(panus-vaenpanraha)
-                clock.tick()
-                timer=5*clock.get_fps()
+                timer=3*clock.get_fps()
+                vaenpanraha=panus
             elif tegu=="call":
                 raha+=(panus-vaenpanraha)
                 vaenlaseraha-=(panus-vaenpanraha)
@@ -229,14 +232,12 @@ def pokker1(screen):
                 ettevalmistus=1
                 vaenlasekäik=False
                 vaenlasebet.text="vaenlane callis"
-                clock.tick()
                 timer=5*clock.get_fps()
             else:
                 tekstväärtus=True
                 võitja.text="sa võitsid"
                 sinuraha+=raha
                 vaenlasebet.text="vaenlane foldis"
-                clock.tick()
                 timer=5*clock.get_fps()
         if tekstväärtus:
             uusroundpu=uusround.drawRect()
@@ -256,4 +257,5 @@ def pokker1(screen):
             algus=50
         #uuendab ekraani
         pygame.display.update()
+        clock.tick(60)
     pygame.quit()
