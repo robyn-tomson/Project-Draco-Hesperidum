@@ -2,11 +2,11 @@ import random
 def vaenlane(punktid, round, sinuraha, vaenlaseraha, panus):
     a=0
     if round==0:
-        if punktid<1 and panus>5 and random.randint(1,100)<75:
+        if punktid<2 and panus>5 and random.randint(1,100)<75:
             return "fold"
         elif panus>vaenlaseraha:
             return "call"
-        elif punktid>1 and random.randint(1,100)>75 :
+        elif punktid>2 and random.randint(1,100)>75 :
             a=panus+random.randint(1,10)
             if vaenlaseraha>=a:
                 return a
@@ -23,7 +23,7 @@ def vaenlane(punktid, round, sinuraha, vaenlaseraha, panus):
             return "fold"
         elif panus>vaenlaseraha:
             return "call"
-        elif punktid>1 and random.randint(1,100)>50:
+        elif punktid>2 and random.randint(1,100)>50:
             a=panus+random.randint(3,15)
             if vaenlaseraha>=a:
                 return a
@@ -39,11 +39,11 @@ def vaenlane(punktid, round, sinuraha, vaenlaseraha, panus):
             return "call"
     
     if round==2:
-        if punktid<1 and panus>5 and random.randint(1,100)<80:
+        if punktid<2 and panus>5 and random.randint(1,100)<80:
             return "fold"
         elif panus>vaenlaseraha:
             return "call"
-        elif punktid>2 and random.randint(1,100)>75:
+        elif punktid>3 and random.randint(1,100)>75:
             a=panus+random.randint(10,20)
             if vaenlaseraha>=a:
                 return a
@@ -58,11 +58,11 @@ def vaenlane(punktid, round, sinuraha, vaenlaseraha, panus):
         else:
             return "call"
     if round==3:
-        if punktid<1 and panus>5 and random.randint(1,100)<50:
+        if punktid<2 and panus>5 and random.randint(1,100)<50:
             return "fold"
         elif panus>vaenlaseraha:
             return "call"
-        elif punktid>2 and random.randint(1,100)>50:
+        elif punktid>3 and random.randint(1,100)>50:
             a=panus+random.randint(3,10)
             if vaenlaseraha>=a:
                 return a
