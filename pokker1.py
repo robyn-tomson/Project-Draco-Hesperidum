@@ -234,7 +234,7 @@ def pokker1(screen):
                 võitja.text="sa võitsid"
                 sinuraha+=raha
                 vaenlasebet.text="vaenlane foldis"
-                timer=5*clock.get_fps()
+                timer=2.5*clock.get_fps()
         if tekstväärtus:
             uusroundpu=uusround.drawRect()
             võitja.drawRect()
