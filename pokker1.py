@@ -142,12 +142,6 @@ def pokker1(screen):
         raisepu=raisep.drawRect()
         callpu=call.drawRect()
         settingspu=settingsp.drawRect()
-        if timer>0:
-            timer-=1
-            if rounds !=6:
-                vaenlasebet.drawRect()
-            else:
-                timer=0
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
                 run=False
@@ -234,6 +228,8 @@ def pokker1(screen):
                 vaenlasebet.text="vaenlane callis"
                 timer=5*clock.get_fps()
             else:
+                vaenlasekäik=False
+                rounds=6
                 tekstväärtus=True
                 võitja.text="sa võitsid"
                 sinuraha+=raha
@@ -255,6 +251,12 @@ def pokker1(screen):
             sinupanraha=0
             vaenlaseraise=False
             algus=50
+        if timer>0:
+            timer-=1
+            if rounds !=6 or vaenlasebet.text=="vaenlane foldis":
+                vaenlasebet.drawRect()
+            else:
+                timer=0
         #uuendab ekraani
         pygame.display.update()
         clock.tick(60)
