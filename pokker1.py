@@ -149,56 +149,56 @@ def pokker1(screen):
             if tekstväärtus and Button.tee(event, uusroundpu):
                     rounds=0
                     tekstväärtus=False
-            if rounds!=6:
-                if Button.tee(event, callpu):
-                        if vaenlasekäik==False:
-                            raha+=(panus-sinupanraha)
-                            sinuraha-=(panus-sinupanraha)
-                            sinupanraha+=panus
-                            vaenlasekäik=True
-                            if vaenlaseraise:
-                                rounds+=1
-                                ettevalmistus=1
-                                sinupanraha=0
-                                vaenpanraha=0
-                                vaenlasekäik=False
-                                vaenlaseraise=False
-                if Button.tee(event, foldpu):
-                        rounds=6
-                        vaenlaseraha+=raha
-                        tekstväärtus=True
-                        võitja.text="vaenlane võitis"
-                if Button.tee(event, raisepu):
-                        if vaenlasekäik==False:
-                            active = True
-                if active:
-                    raisep.text=user_text
-                if event.type == pygame.KEYDOWN and active: 
-                    if event.key == pygame.K_RETURN:
-                        raisep.text="RAISE"
-                        try:
-                            if int(user_text)>sinuraha or int(user_text)<=panus:
-                                raisep.text="vale"
-                            else:
-                                vaenlasekäik=True
-                                panus=int(user_text)
-                                sinuraha-=(int(user_text)-sinupanraha)
-                                raha+=(panus-sinupanraha)
-                                sinupanraha=panus
-                        except:
-                            user_text=""
+
+            if Button.tee(event, callpu) and rounds!=6:
+                    if vaenlasekäik==False:
+                        raha+=(panus-sinupanraha)
+                        sinuraha-=(panus-sinupanraha)
+                        sinupanraha+=panus
+                        vaenlasekäik=True
+                        if vaenlaseraise:
+                            rounds+=1
+                            ettevalmistus=1
+                            sinupanraha=0
+                            vaenpanraha=0
+                            vaenlasekäik=False
+                            vaenlaseraise=False
+            if Button.tee(event, foldpu) and rounds!=6:
+                    rounds=6
+                    vaenlaseraha+=raha
+                    tekstväärtus=True
+                    võitja.text="vaenlane võitis"
+            if Button.tee(event, raisepu) and rounds!=6:
+                    if vaenlasekäik==False:
+                        active = True
+            if active:
+                raisep.text=user_text
+            if event.type == pygame.KEYDOWN and active: 
+                if event.key == pygame.K_RETURN:
+                    raisep.text="RAISE"
+                    try:
+                        if int(user_text)>sinuraha or int(user_text)<=panus:
                             raisep.text="vale"
+                        else:
+                            vaenlasekäik=True
+                            panus=int(user_text)
+                            sinuraha-=(int(user_text)-sinupanraha)
+                            raha+=(panus-sinupanraha)
+                            sinupanraha=panus
+                    except:
                         user_text=""
-                        active=False
-                    elif event.key == pygame.K_BACKSPACE:
-                        user_text= user_text[:-1]
-                    else: 
-                        user_text += event.unicode
-                if Button.tee(event, settingspu):
-                    if settings==True:
-                        settings=False
-                    else:
-                        settings=True
+                        raisep.text="vale"
+                    user_text=""
+                    active=False
+                elif event.key == pygame.K_BACKSPACE:
+                    user_text= user_text[:-1]
+                else: 
+                    user_text += event.unicode
+            if Button.tee(event, settingspu):
+                if settings==True:
+                    settings=False
+                else:
+                    settings=True
         if settings:
             pygame.draw.rect(screen,(255,255,100),[0,100,200,200])
             screen.blit(textset , (10,110))
