@@ -14,7 +14,8 @@ def menu(screen):
   
     # white color  
     color = (255,255,255)  
-
+    background_image = pygame.image.load('Project-Draco-Hesperidum\pokkermenubr.jpg')
+    background_image = pygame.transform.scale(background_image, (1100, 700))
     settings=False
   
     # light shade of the button  
@@ -76,7 +77,7 @@ def menu(screen):
                         settings=True 
 
     # fills the screen with a color  
-        screen.fill((60,25,60))  
+        screen.blit(background_image, (0, 0))  
       
     # stores the (x,y) coordinates into  
     # the variable as a tuple  
