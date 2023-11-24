@@ -13,7 +13,6 @@ def pokerhand(kasi):
         c=number[0]
         number[0]=number[1]
         number[1]=c
-    print(number)
     rida=number[:]
     rida.sort
     if mast.count('♥') >= 5 or mast.count('♦') >= 5 or mast.count('♣') >= 5 or mast.count('♠') >= 5: # mast/mastirida/kuninglikmastirida

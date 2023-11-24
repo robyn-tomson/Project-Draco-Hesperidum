@@ -207,7 +207,6 @@ def pokker1(screen):
             pygame_widgets.update(event)
         if vaenlasekäik:
             tegu=vaenlane(pokerhand(vaenlasekaartid+kaartid), rounds,  sinuraha, vaenlaseraha, panus)
-            print(tegu)
             if isinstance(tegu, int):
                 panus=tegu
                 raha+=(panus-vaenpanraha)
