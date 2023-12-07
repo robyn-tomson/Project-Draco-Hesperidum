@@ -5,7 +5,7 @@ from pokker1 import pokker1
 SCREEN_WIDTH=1100
 SCREEN_HEIGHT=700
 screen=pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-koht="menu"
+koht="kaotus"
 while True:
     
     if koht=="menu":

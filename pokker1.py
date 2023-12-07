@@ -44,6 +44,7 @@ def pokker1(screen):
     call= Button(350, 550, 100, 200, red, 0, 7, "CALL", white, screen, pygame.font.Font('freesansbold.ttf', 40))
     fold=Button(875, 550, 100, 200, red, 0, 7, "FOLD", white, screen, pygame.font.Font('freesansbold.ttf', 40))
     raisep = Button(625, 550, 100, 200, red, 0, 7, "RAISE", white, screen, pygame.font.Font('freesansbold.ttf', 40))
+    Menu=Button(875, 550, 100, 200, red, 0, 7, "FOLD", white, screen, pygame.font.Font('freesansbold.ttf', 40))
     Tekst = Tekstivali(660, 240, 70, 200, (0,0,250), 0, 7, "panus: "+str(panus), white, screen, pygame.font.Font('freesansbold.ttf', 40))
     võitja = Tekstivali(100, 100, 50, 400, (0,0,250), 0, 7, "", white, screen, pygame.font.Font('freesansbold.ttf', 40))
     vaenlasebet=Tekstivali(100, 250, 150, 390, red, 0, 7, "", white, screen, pygame.font.Font('freesansbold.ttf', 40))

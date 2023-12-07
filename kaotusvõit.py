@@ -14,10 +14,13 @@ def kaotusvõit(screen, seis):
     color = (255,255,255)  
   
     # light shade of the button  
-    color_light = (170,170,170)  
+    color_light = (255, 153, 153)  
   
     # dark shade of the button  
-    color_dark = (100,100,100)  
+    color_dark = (139, 0, 0) 
+
+    background_image = pygame.image.load('Project-Draco-Hesperidum\pokkermenubr.jpg')
+    background_image = pygame.transform.scale(background_image, (1100, 700))
   
     # stores the width of the  
     # screen into a variable  
@@ -56,15 +59,15 @@ def kaotusvõit(screen, seis):
                 
             #if the mouse is clicked on the  
             # button the game is terminated  
-                if width/2 <= mouse[0] <= width/2+140 and height/2 <= mouse[1] <= height/2+40:  
+                if width/2-90 <= mouse[0] <= width/2+110 and height/2 <= mouse[1] <= height/2+40:  
                     pygame.quit()
-                if width/2 <= mouse[0] <= width/2+200 and height/3 <= mouse[1] <= height/3+40:  
+                if width/2-60 <= mouse[0] <= width/2+140 and height/3 <= mouse[1] <= height/3+40:  
                     pygame.mixer.music.stop()
                     return "pokker"
 
                   
     # fills the screen with a color  
-        screen.fill((60,25,60))  
+        screen.blit(background_image, (0, 0))  
       
     # stores the (x,y) coordinates into  
     # the variable as a tuple  
@@ -72,22 +75,22 @@ def kaotusvõit(screen, seis):
       
     # if mouse is hovered on a button it  
     # changes to lighter shade  
-        if width/2 <= mouse[0] <= width/2+140 and height/2 <= mouse[1] <= height/2+40:  
-            pygame.draw.rect(screen,color_light,[width/2,height/2,140,40])  
+        if width/2-60 <= mouse[0] <= width/2+80 and height/2 <= mouse[1] <= height/2+40:  
+            pygame.draw.rect(screen,color_light,[width/2-60,height/2,140,40])  
           
         else:  
-            pygame.draw.rect(screen,color_dark,[width/2,height/2,140,40])
+            pygame.draw.rect(screen,color_dark,[width/2-60,height/2,140,40])
 
-        if width/2 <= mouse[0] <= width/2+200 and height/3 <= mouse[1] <= height/3+40:  
-            pygame.draw.rect(screen,color_light,[width/2,height/3,200,40])  
+        if width/2-90 <= mouse[0] <= width/2+110 and height/3 <= mouse[1] <= height/3+40:  
+            pygame.draw.rect(screen,color_light,[width/2-90,height/3,200,40])  
           
         else:  
-            pygame.draw.rect(screen,color_dark,[width/2,height/3,200,40])
+            pygame.draw.rect(screen,color_dark,[width/2-90,height/3,200,40])
         pygame.draw.rect(screen,color_dark,[width/2-200,height/5,400,80])
     # superimposing the text onto our button  
-        screen.blit(text , (width/2+30,height/2)) 
-        screen.blit(text2 , (width/2+30,height/3))
-        screen.blit(text3 , (width/2+30,height/5))
+        screen.blit(text , (width/2-30,height/2)) 
+        screen.blit(text2 , (width/2-60,height/3))
+        screen.blit(text3 , (width/2-150,height/5))
       
     # updates the frames of the game  
         pygame.display.update()  
