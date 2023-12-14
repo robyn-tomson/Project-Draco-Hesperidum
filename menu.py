@@ -31,8 +31,9 @@ def menu(screen):
     # rendering a text written in  
     # this font  
     text = smallfont.render('QUIT' , True , color)  
-    text2 = smallfont.render('START' , True , color)
+    text2 = smallfont.render('POKKER' , True , color)
     text3 = smallfont.render('SETTINGS' , True , color)
+    text4 = smallfont.render('SLOTS' , True , color)
 
     slider = Slider(screen, 40, 60, 100, 20, min=0, max=99, step=1)
     slider.value=round(pygame.mixer.music.get_volume()*100)+1
@@ -63,6 +64,11 @@ def menu(screen):
                     pygame_widgets.WidgetHandler.removeWidget(output)
                     pygame.mixer.music.stop()
                     return "pokker"
+                if asukoht[0] <= mouse[0] <= asukoht[0]+200 and asukoht[1]-300 <= mouse[1] <= asukoht[1]-140:  
+                    pygame_widgets.WidgetHandler.removeWidget(slider)
+                    pygame_widgets.WidgetHandler.removeWidget(output)
+                    pygame.mixer.music.stop()
+                    return "slots"
                 if asukoht[0] <= mouse[0] <= asukoht[0]+200 and asukoht[1]-100 <= mouse[1] <= asukoht[1]-40: 
                     if settings==True:
                         settings=False
@@ -95,10 +101,16 @@ def menu(screen):
           
         else:  
             pygame.draw.rect(screen,color_dark,[asukoht[0],asukoht[1]-200,200,60], 0, 7)
+        if asukoht[0] <= mouse[0] <= asukoht[0]+200 and asukoht[1]-300 <= mouse[1] <= asukoht[1]-300+60:  
+            pygame.draw.rect(screen,color_light,[asukoht[0],asukoht[1]-300,200,60], 0, 7)  
+          
+        else:  
+            pygame.draw.rect(screen,color_dark,[asukoht[0],asukoht[1]-300,200,60], 0, 7)
       
     # superimposing the text onto our button  
         screen.blit(text , (asukoht[0]+30,asukoht[1]+15)) 
         screen.blit(text2 , (asukoht[0]+30,asukoht[1]-185))
+        screen.blit(text4 , (asukoht[0]+30,asukoht[1]-285)) 
         screen.blit(text3 , (asukoht[0]+30,asukoht[1]-85))  
         if settings:
             pygame.draw.rect(screen,(255,255,100),[0,0,200,200])
