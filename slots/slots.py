@@ -99,4 +99,4 @@ def slots(screen):
 SCREEN_WIDTH=1100
 SCREEN_HEIGHT=700
 screen=pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-lots(screen)
+slots(screen)
